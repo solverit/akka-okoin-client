@@ -1,3 +1,14 @@
+### JetBrains template
+# Covers JetBrains IDEs: IntelliJ
+*.iml
+.idea/
+out/
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+### Scala template
 *.class
 *.log
 

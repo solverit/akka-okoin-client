@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <property scope="context" name="appenderPattern"
+            value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${CONTEXT_NAME} [%-5p][%-12.12t][%36c{3}] - %msg%n"/>
+  <!--value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${CONTEXT_NAME} %-5level [%logger{0}.%M:%L] - %msg%n"/>-->
+  <property scope="context" name="maxHistory" value="60"/>
+
+  <!-- Application log file -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>${appenderPattern}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- deny all events below this level -->
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>DEBUG</level>
+    </filter>
+    <file>logs/${CONTEXT_NAME}.log</file>
+    <append>true</append>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- daily rollover -->
+      <fileNamePattern>logs/${CONTEXT_NAME}.log%d{.yyyy-MM-dd}
+      </fileNamePattern>
+      <!-- keep {maxHistory} days of history -->
+      <maxHistory>${maxHistory}</maxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>${appenderPattern}</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="slick" level="ERROR"/>
+  <logger name="scala.slick.session" level="ERROR"/>
+  <logger name="com.mchange" level="ERROR"/>
+  <logger name="com.mchange.v2.c3p0" level="ERROR"/>
+
+  <root level="DEBUG">
+    <!--<appender-ref ref="FILE"/>-->
+    <appender-ref ref="STDOUT"/>
+  </root>
+
+</configuration>
